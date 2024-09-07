@@ -1,20 +1,62 @@
-- Clone the repo
+# PayUp Monorepo
 
-```jsx
+A monorepo for managing a user-centric financial application, built using Next.js, Prisma, and Turborepo.
+
+## Getting Started
+
+Follow the steps below to set up the project locally.
+
+### 1. Clone the Repository
+
+First, clone the repository to your local machine:
+
+```bash
 git clone https://github.com/vikas-yadav2002/PayUp
-```
+cd PayUp
+2. Install Dependencies
+Install all necessary dependencies for the monorepo:
 
-- npm install
-- Run postgres either locally or on the cloud (neon.tech)
+bash
+Copy code
+npm install
+3. Set Up PostgreSQL
+You can run PostgreSQL either locally or using a cloud provider like Neon.tech. To run PostgreSQL locally with Docker, use the following command:
 
-```jsx
-docker run  -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
-```
+bash
+Copy code
+docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+4. Configure Environment Variables
+Copy all the .env.example files to .env for each app and package:
 
-- Copy over all .env.example files to .env
-- Update .env files everywhere with the right db url
-- Go to `packages/db`
-    - npx prisma migrate dev
-    - npx prisma db seed
-- Go to `apps/user-app` , run `npm run dev`
-- Try logging in using phone - 1111111111 , password - alice (See `seed.ts`)
+bash
+Copy code
+# Copy .env.example to .env for all apps and packages
+cp apps/*/.env.example apps/*/.env
+cp packages/*/.env.example packages/*/.env
+Then, update each .env file with the correct database URL and other required environment variables.
+
+5. Run Database Migrations
+Navigate to the packages/db folder and apply the Prisma migrations:
+
+bash
+Copy code
+cd packages/db
+npx prisma migrate dev
+npx prisma db seed
+This will set up your database schema and seed the initial data.
+
+6. Start the Development Server
+Now, navigate to the apps/user-app folder and start the development server:
+
+bash
+Copy code
+cd apps/user-app
+npm run dev
+The development server should now be running at http://localhost:3000.
+
+7. Login Information
+Once the app is running, you can try logging in using the following credentials (this data is seeded by Prisma):
+
+Phone: 1111111111
+Password: alice
+You can find this login information in the seed.ts file.
