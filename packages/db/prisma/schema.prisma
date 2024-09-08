@@ -17,6 +17,7 @@ model User {
   Balance                 Balance[]
   SentTransaction         p2ptransactions[]     @relation(name: "FromUserTransaction")
   ReccievedTransaction    p2ptransactions[]     @relation(name: "ToUserTransaction")
+  // merchantTransaction     MerchantTransactions[]  
 
 }
 
@@ -25,6 +26,18 @@ model Merchant {
   email     String   @unique
   name      String?
   auth_type AuthType
+  // balance  Balance[]
+  tranactions  MerchantTransactions[]
+}
+
+model MerchantTransactions {
+  id            Int      @id @default(autoincrement())
+  merchantId    Int
+  merchant     Merchant @relation(fields: [merchantId], references: [id])
+  timestamp   DateTime
+  // customerId  Int
+  // user        User @relation(fields: [customerId] , references: [id])
+
 }
 
 model OnRampTransaction {
@@ -39,21 +52,23 @@ model OnRampTransaction {
 }
 
 model Balance {
-  id     Int  @id @default(autoincrement())
-  userId Int  @unique
-  amount Int
-  locked Int
-  user   User @relation(fields: [userId], references: [id])
+  id           Int  @id @default(autoincrement())
+  userId       Int  @unique
+  merchantId   Int  @unique
+  amount       Int
+  locked       Int
+  user         User @relation(fields: [userId], references: [id])
+  // marchant    Merchant @relation(fields: [merchantId] , references: [id])
 }
 
 model p2ptransactions {
-  id        Int          @id @default(autoincrement())
-  amount    Int  
-  Timestamp  DateTime
+  id           Int          @id @default(autoincrement())
+  amount       Int  
+  Timestamp    DateTime
   fromUserId   Int
-  fromUser   User         @relation( name :"FromUserTransaction"  , fields: [fromUserId], references: [id])
-  toUserId    Int
-  toUser     User         @relation(  name : "ToUserTransaction"   ,fields: [toUserId], references: [id])
+  fromUser     User         @relation( name :"FromUserTransaction"  , fields: [fromUserId], references: [id])
+  toUserId     Int
+  toUser       User         @relation(  name : "ToUserTransaction"   ,fields: [toUserId], references: [id])
 
 }
 
