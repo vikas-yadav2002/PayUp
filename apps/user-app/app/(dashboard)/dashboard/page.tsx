@@ -1,7 +1,11 @@
+
 import GreetingUserName from "../../../components/GreetingUserName";
 import LineChart from "../../../components/LineChart";
 
-export default function() {
+
+
+export default async function() {
+   
     return (
         <>
         <div className="flex flex-col">

@@ -13,7 +13,7 @@ interface credentials {
 
 const credentialsSchema = z.object({
     phone: z.string().min(10),
-    password: z.string().min(8),
+    password: z.string(),
 })
 
 export const authOptions = {
@@ -112,6 +112,9 @@ export const authOptions = {
           }
           return session;
         }
-      }
+      } ,
+      pages: {
+        signIn: '/signin',
+      },
   }
   
