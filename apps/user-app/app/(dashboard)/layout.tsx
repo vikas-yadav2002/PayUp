@@ -3,6 +3,10 @@ import SideBar from "../../components/sideBar";
 import Loader from "../../components/Loader";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import SkeletonLoader from "../../components/transferSkeleton";
+import HomeLoader from "../../components/HomeLoader";
+import TransactionsLoader from "../../components/TransactionsLoader";
+import PeerToPeerLoader from "../../components/PeerToPeerLoader";
 
 export default function Layout({
   children,
@@ -35,14 +39,28 @@ export default function Layout({
     };
   }, [pathname, router]);
 
+  const renderLoader = () =>{
+      switch(pathname){
+        case '/transfer':
+        return <SkeletonLoader />;
+      case '/dashboard':
+        return <HomeLoader />;
+      case '/transactions':
+        return <TransactionsLoader />;
+      case '/peer-to-peer':
+        return <PeerToPeerLoader />;
+      default:
+        return <Loader/>;
+      }
+  }
+
   return (
     <div className="flex">
       {/* Sidebar Component */}
-      <SideBar />
+      <SideBar/>
 
       {/* Main Content Area */}
-     
-        {loading ? <Loader /> : children}
+      {loading ? renderLoader() : children}
       
     </div>
   );
