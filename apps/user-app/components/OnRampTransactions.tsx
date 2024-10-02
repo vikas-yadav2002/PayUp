@@ -1,4 +1,6 @@
+"use client"
 import { Card } from "@repo/ui/card"
+import CountUp from "react-countup"
 
 export const OnRampTransactions = ({
     transactions
@@ -36,7 +38,7 @@ export const OnRampTransactions = ({
                         </div>
                         <div className="flex flex-col justify-center text-right">
                             <span className="text-lg font-bold text-green-600">
-                                + Rs {t.amount / 100}
+                                + Rs {<CountUp end={t.amount / 100} decimal="4" />}
                             </span>
                         </div>
                     </div>

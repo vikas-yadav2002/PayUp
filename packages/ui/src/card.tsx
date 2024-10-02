@@ -12,9 +12,12 @@ export function Card({
       className="border p-6 bg-white rounded-xl bg-[#ededed]"
     >
       <h1 className="text-xl border-b pb-2">
+        <div>
         {title}
+        </div>
       </h1>
-      <p>{children}</p>
+      <p>
+        <div>{children}</div></p>
     </div>
   );
 }

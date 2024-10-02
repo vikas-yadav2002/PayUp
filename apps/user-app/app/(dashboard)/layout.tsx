@@ -16,9 +16,9 @@ export default function Layout({
   useEffect(() => {
     const handleRouteChange = () => {
       setLoading(true);
-      setTimeout(() => {
+     
         setLoading(false);
-      }, 500); // Artificial delay to simulate loading
+    
     };
 
     handleRouteChange(); // Trigger loader on initial load
@@ -41,9 +41,9 @@ export default function Layout({
       <SideBar />
 
       {/* Main Content Area */}
-      <div className="content">
+     
         {loading ? <Loader /> : children}
-      </div>
+      
     </div>
   );
 }
