@@ -10,7 +10,10 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
     "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.14",
     "turbo": "latest"
   },
   "engines": {
@@ -22,10 +25,12 @@
     "packages/*"
   ],
   "dependencies": {
+    "@shadcn/ui": "^0.0.4",
     "framer-motion": "^11.5.4",
     "io": "^1.5.3",
     "lucide-react": "^0.441.0",
     "npm": "^10.8.3",
+    "typescript": "^5.6.3",
     "zod": "^3.23.8"
   }
 }
