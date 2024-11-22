@@ -1,11 +1,18 @@
-import express from "express";
+import express, { json } from "express";
 import db from "@repo/db/client";
+import {z} from "zod";
 const app = express();
+const paymentSchema = z.object({
+    token : z.string(),
+    userId : z.string(),
+    amount : z.number()
+})
 
 app.use(express.json());
 
 app.post("/hdfcWebhook", async (req, res) => {
     // TODO: Add zod validation here?
+
     // TODO: HDFC bank should ideally send us a secret so we know this is sent by them
     const paymentInformation = {
         token: req.body.token,
@@ -16,6 +23,13 @@ app.post("/hdfcWebhook", async (req, res) => {
     console.log(paymentInformation);
 
     try {
+        const parsedData = paymentSchema.safeParse(paymentInformation);
+        if (!parsedData.success) {
+            return res.json({
+                success: false,
+                errors: parsedData.error.errors, // Include validation errors
+            });
+        }
         await db.$transaction([
             db.balance.updateMany({
                 where: {
