@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import { format } from "date-fns";
 import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
 
@@ -44,7 +45,7 @@ export const P2PTransfer = ({
                     Amount: <span className="text-green-600 font-bold">${transfer.amount}</span>
                 </div>
                 <div className="text-sm text-gray-500">
-                    Date: {new Date(transfer.timestamp).toLocaleString()}
+                Date: {format(new Date(transfer.timestamp), "MM/dd/yyyy, hh:mm:ss a")}
                 </div>
                 <Button onClick={()=>{
                  console.log("clicked")

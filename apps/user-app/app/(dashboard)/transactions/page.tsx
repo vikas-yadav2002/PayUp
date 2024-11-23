@@ -29,7 +29,7 @@ export default async function TransactionsPage() {
     const transaction = await getP2PTransaction();
 
     return (
-        <div>
+        <div className="flex  justify-center w-full">
             <P2PTransfer transaction={transaction} />
         </div>
     );

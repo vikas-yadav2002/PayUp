@@ -1,37 +1,247 @@
 
+import { BarChart, PieChart } from "recharts";
 import GreetingUserName from "../../../components/GreetingUserName";
 import LineChart from "../../../components/LineChart";
+import CustomBarChart from "../../../components/barChart";
+import CustomPieChart from "../../../components/pieChart";
 
 
 
-export default async function() {
-   
-    return (
-        <>
-        <div className="flex flex-col">
+// export default async function () {
+
+//   return (
+//     <>
+//       <div className="flex flex-col">
+//         <div className="py-4">
+//           <GreetingUserName />
+//         </div>
+//         <div className="w-96 h-1 bg-black ">
+
+//         </div>
+//         <div className="p-10">
+//           <h1 className="text-2xl font-bold mb-5">Dashboard</h1>
+//           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+//             {/* Transfer Statistics */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Transfer Statistics</h2>
+//               <LineChart />
+//             </div>
+
+//             {/* Receiving Analytics */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Receiving Analytics</h2>
+//               <LineChart />
+//             </div>
+
+//             {/* Revenue Overview */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Revenue Overview</h2>
+//               <CustomBarChart />
+//             </div>
+
+//             {/* Monthly Performance */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Monthly Performance</h2>
+//               <LineChart />
+//             </div>
+
+//             {/* Recent Transactions */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Recent Transactions</h2>
+//               <ul className="space-y-3">
+//                 <li className="flex justify-between">
+//                   <span>Payment to John Doe</span>
+//                   <span className="text-green-500">+ $200</span>
+//                 </li>
+//                 <li className="flex justify-between">
+//                   <span>Refund from Jane Smith</span>
+//                   <span className="text-red-500">- $50</span>
+//                 </li>
+//                 <li className="flex justify-between">
+//                   <span>Subscription Payment</span>
+//                   <span className="text-green-500">+ $15</span>
+//                 </li>
+//               </ul>
+//             </div>
+
+//             {/* Notifications */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Notifications</h2>
+//               <ul className="space-y-3">
+//                 <li className="flex items-center gap-2">
+//                   <span className="bg-blue-500 h-2 w-2 rounded-full"></span>
+//                   <span>New user registered</span>
+//                 </li>
+//                 <li className="flex items-center gap-2">
+//                   <span className="bg-yellow-500 h-2 w-2 rounded-full"></span>
+//                   <span>Pending approval for refund</span>
+//                 </li>
+//                 <li className="flex items-center gap-2">
+//                   <span className="bg-green-500 h-2 w-2 rounded-full"></span>
+//                   <span>Payment successful for invoice #123</span>
+//                 </li>
+//               </ul>
+//             </div>
+
+//             {/* Quick Actions */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">Quick Actions</h2>
+//               <div className="grid grid-cols-2 gap-4">
+//                 <button className="bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600">
+//                   Add Transaction
+//                 </button>
+//                 <button className="bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600">
+//                   Generate Report
+//                 </button>
+//                 <button className="bg-yellow-500 text-white py-2 rounded-lg shadow hover:bg-yellow-600">
+//                   Set Budget
+//                 </button>
+//                 <button className="bg-red-500 text-white py-2 rounded-lg shadow hover:bg-red-600">
+//                   View Alerts
+//                 </button>
+//               </div>
+//             </div>
+
+//             {/* User Engagement */}
+//             <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
+//               <h2 className="text-xl font-semibold mb-3">User Engagement</h2>
+//               <CustomPieChart />
+//             </div>
+//           </div>
+
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+
+export default async function () {
+  return (
+    <>
+      <div className="flex flex-col">
         <div className="py-4">
-            <GreetingUserName/>
+          <GreetingUserName />
         </div>
-        <div className="w-96 h-1 bg-black ">
-
-        </div>
+        <div className="w-full h-1 bg-black mb-6"></div>
         <div className="p-10">
           <h1 className="text-2xl font-bold mb-5">Dashboard</h1>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Other Dashboard Components */}
-            <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
-              <h2 className="text-xl font-semibold mb-3">Transaction Trends</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {/* Transfer Statistics */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Transfer Statistics</h2>
               <LineChart />
             </div>
-            <div className="bg-white p-5 shadow-lg rounded-lg w-[30rem]">
-              <h2 className="text-xl font-semibold mb-3">Transaction History</h2>
+
+            {/* Receiving Analytics */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Receiving Analytics</h2>
               <LineChart />
             </div>
-            {/* Add more sections, charts, cards, etc. as needed */}
+
+            {/* Revenue Overview */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Revenue Overview</h2>
+              <CustomBarChart />
+            </div>
+
+            {/* Monthly Performance */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Monthly Performance</h2>
+              <LineChart />
+            </div>
+
+            {/* Recent Transactions */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Recent Transactions</h2>
+              <ul className="space-y-3">
+                <li className="flex justify-between">
+                  <span>Payment to John Doe</span>
+                  <span className="text-green-500">+ $200</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Refund from Jane Smith</span>
+                  <span className="text-red-500">- $50</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Subscription Payment</span>
+                  <span className="text-green-500">+ $15</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Notifications */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Notifications</h2>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2">
+                  <span className="bg-blue-500 h-2 w-2 rounded-full"></span>
+                  <span>New user registered</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-yellow-500 h-2 w-2 rounded-full"></span>
+                  <span>Pending approval for refund</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-green-500 h-2 w-2 rounded-full"></span>
+                  <span>Payment successful for invoice #123</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">Quick Actions</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <button className="bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600">
+                  Add Transaction
+                </button>
+                <button className="bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600">
+                  Generate Report
+                </button>
+                <button className="bg-yellow-500 text-white py-2 rounded-lg shadow hover:bg-yellow-600">
+                  Set Budget
+                </button>
+                <button className="bg-red-500 text-white py-2 rounded-lg shadow hover:bg-red-600">
+                  View Alerts
+                </button>
+              </div>
+            </div>
+
+            {/* User Engagement */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">User Engagement</h2>
+              <CustomPieChart />
+            </div>
+
+            {/* User Details */}
+            <div className="bg-white p-5 shadow-lg rounded-lg">
+              <h2 className="text-xl font-semibold mb-3">User Details</h2>
+              <ul className="space-y-3">
+                <li className="flex justify-between">
+                  <span className="font-medium">Name:</span>
+                  <span>John Doe</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-medium">Email:</span>
+                  <span>johndoe@example.com</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-medium">Phone:</span>
+                  <span>+123 456 7890</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="font-medium">Member Since:</span>
+                  <span>Jan 1, 2020</span>
+                </li>
+              </ul>
+              <button className="mt-5 bg-blue-500 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600">
+                View Full Profile
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-        </>
-      );
-    };
-    
+      </div>
+    </>
+  );
+}
