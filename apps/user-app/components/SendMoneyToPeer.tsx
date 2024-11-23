@@ -8,7 +8,7 @@ const SendMoneyToPeers = () => {
   const [amount , setAmount] = useState("");
   const [peerAddress, setPeerAddress] = useState("");
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-gradient-to-br from-blue-100 via-slate-100 to-blue-50 text-slate-950 rounded-xl shadow-2xl">
+    <div className="w-full mx-auto p-6 bg-gradient-to-br from-blue-100 via-slate-100 to-blue-50 text-slate-950 rounded-xl shadow-2xl">
       <h2 className="text-center text-2xl font-bold mb-6 text-blue-800">Send Money</h2>
       <div className="mb-4">
         <TextInput
