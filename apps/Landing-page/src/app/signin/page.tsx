@@ -1,14 +1,20 @@
+"use client"
 import Link from "next/link";
 
 import { Metadata } from "next";
+import { useState } from "react";
 
-export const metadata: Metadata = {
-  title: "PayEase",
-  description: "",
-  // other metadata
-};
+// export const metadata: Metadata = {
+//   title: "PayEase",
+//   description: "",
+//   // other metadata
+// };
 
 const SigninPage = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -25,19 +31,21 @@ const SigninPage = () => {
                 </p>
                 <ul className="mt-4 text-left text-gray-600 dark:text-gray-300 list-disc list-inside">
                   <li className="m-1">View and manage your account details</li>
-                  <li  className="m-1">Track your transaction history</li>
-                  <li  className="m-1">Access personalized recommendations</li>
-                  <li  className="m-1">Get support and assistance</li>
+                  <li className="m-1">Track your transaction history</li>
+                  <li className="m-1">Access personalized recommendations</li>
+                  <li className="m-1">Get support and assistance</li>
                 </ul>
                 <button
                   className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-                >
+                  onClick={() => {
+                    window.location.href = "http://localhost:3002/signin";
+                  }} >
                   Sign In as User
                 </button>
                 <p className="mt-6 text-gray-600 dark:text-gray-300">
                   Don't have an account?{" "}
                   <a
-                    href="/signup-user"
+                    href="http://localhost:3002/signup"
                     className="text-blue-600 hover:underline dark:text-blue-400"
                   >
                     Sign Up
@@ -54,25 +62,52 @@ const SigninPage = () => {
                   Sign in to manage your merchant account and enjoy the following:
                 </p>
                 <ul className="mt-4 text-left text-gray-600 dark:text-gray-300 list-disc list-inside">
-                  <li  className="m-1">Monitor and track transactions</li>
+                  <li className="m-1">Monitor and track transactions</li>
                   <li className="m-1">Access detailed business analytics</li>
                   <li className="m-1">Manage your merchant profile</li>
                   <li className="m-1">Seamless payouts and wallet management</li>
                 </ul>
-                <button
-                  className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-                >
-                  Sign In as Merchant
-                </button>
-                <p className="mt-6 text-gray-600 dark:text-gray-300">
-                  Don't have an account?{" "}
-                  <a
-                    href="/signup-merchant"
-                    className="text-blue-600 hover:underline dark:text-blue-400"
+                <div>
+                  <button
+                    className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                    onClick={openModal}
                   >
-                    Sign Up
-                  </a>
-                </p>
+                    Sign In as Merchant
+                  </button>
+                  <p className="mt-6 text-gray-600 dark:text-gray-300">
+                    Don't have an account?{" "}
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault(); // Prevent default navigation behavior
+                        openModal();
+                      }}
+                      className="text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                      Sign Up
+                    </a>
+                  </p>
+
+                  {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                      <div className="bg-white rounded-lg p-6 w-80 shadow-lg">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                          Coming Soon!
+                        </h2>
+                        <p className="text-gray-600 mb-6">
+                          The Merchant section is still under development. Stay tuned for
+                          updates!
+                        </p>
+                        <button
+                          className="w-full bg-blue-600 text-white rounded py-2 hover:bg-blue-700"
+                          onClick={closeModal}
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
