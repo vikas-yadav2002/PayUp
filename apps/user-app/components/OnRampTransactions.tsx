@@ -30,7 +30,7 @@ export const OnRampTransactions = ({
                     >
                         <div>
                             <div className="text-sm font-semibold text-gray-700">
-                                Received INR
+                                {t.status}
                             </div>
                             <div className="text-slate-600 text-xs">
                                 {t.time.toDateString()}

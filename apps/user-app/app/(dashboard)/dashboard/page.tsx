@@ -12,6 +12,7 @@ import Notifications from "../../../components/Notifications";
 import QuickAction from "../../../components/QuickActions";
 import UserEngagement from "../../../components/UserEngagement";
 import UserDetails from "../../../components/UserDetails";
+import { Session } from "inspector";
 
 
 
@@ -44,6 +45,7 @@ async function getBalance() {
 }
 
 export default async function () {
+  
   const balance = await getBalance();
     const transactions = await getOnRampTransactions();
   return (

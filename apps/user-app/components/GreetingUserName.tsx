@@ -5,8 +5,8 @@ import { authOptions } from "../app/lib/auth";
 const GreetingUserName = async ()=>{
     let identifier:string;
     const session = await getServerSession(authOptions);
-    if(session?.user?.id){
-        identifier = session.user.id;
+    if(session?.user?.name){
+        identifier = session.user.name;
     }
     else{
         

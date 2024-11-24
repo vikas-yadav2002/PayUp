@@ -3,13 +3,17 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FaGoogle, FaGithub, FaSignInAlt } from 'react-icons/fa';
+import PeerToPeerLoader from './PeerToPeerLoader';
+import Loader from './Loader';
 
 export default function SignIn() {
+  const [loading, setLoading] = useState<boolean>(false)
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: any) => {
+    setLoading(true);
     e.preventDefault();
 
     const result = await signIn('credentials', {
@@ -18,10 +22,14 @@ export default function SignIn() {
       redirect: false,
     });
 
+    console.log(result);
+
     if (result?.error) {
       console.error('Sign-in failed:', result.error);
+      setLoading(false);
     } else {
       router.push('/dashboard');
+      setLoading(false);
     }
   };
 
@@ -56,9 +64,14 @@ export default function SignIn() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="w-3/4 p-3 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-all duration-300 shadow-lg transform hover:scale-105"
+                className={`w-3/4 p-3 text-white rounded-md transition-all duration-300 shadow-lg transform ${loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-600 hover:scale-105"
+                  }`}
+                disabled={loading}
               >
-                <FaSignInAlt className="inline-block mr-2" /> Sign In
+                {loading ? <Loader/> :  <FaSignInAlt className="inline-block mr-2" /> }
+               
               </button>
             </div>
           </form>
