@@ -8,6 +8,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import prisma from "@repo/db/client";
 import { OnRampTransactions } from "../../../components/OnRampTransactions";
+import Notifications from "../../../components/Notifications";
+import QuickAction from "../../../components/QuickActions";
+import UserEngagement from "../../../components/UserEngagement";
+import UserDetails from "../../../components/UserDetails";
 
 
 
@@ -84,74 +88,16 @@ export default async function () {
             </div>
 
             {/* Notifications */}
-            <div className="bg-white p-5 shadow-lg rounded-lg">
-              <h2 className="text-xl font-semibold mb-3">Notifications</h2>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2">
-                  <span className="bg-blue-500 h-2 w-2 rounded-full"></span>
-                  <span>Image selection remaining!!!</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="bg-yellow-500 h-2 w-2 rounded-full"></span>
-                  <span>Pending approval from bank refund</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="bg-green-500 h-2 w-2 rounded-full"></span>
-                  <span>Payment successful for invoice #123</span>
-                </li>
-              </ul>
-            </div>
+            <Notifications/>
 
             {/* Quick Actions */}
-            <div className="bg-white p-5 shadow-lg rounded-lg">
-              <h2 className="text-xl font-semibold mb-3">Quick Actions</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <button className="bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600">
-                  Add Transaction
-                </button>
-                <button className="bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600">
-                  Generate Report
-                </button>
-                <button className="bg-yellow-500 text-white py-2 rounded-lg shadow hover:bg-yellow-600">
-                  Set Budget
-                </button>
-                <button className="bg-red-500 text-white py-2 rounded-lg shadow hover:bg-red-600">
-                  View Alerts
-                </button>
-              </div>
-            </div>
+            <QuickAction/>
 
             {/* User Engagement */}
-            <div className="bg-white p-5 shadow-lg rounded-lg">
-              <h2 className="text-xl font-semibold mb-3">User Engagement</h2>
-              <CustomPieChart />
-            </div>
+            <UserEngagement/>
 
             {/* User Details */}
-            <div className="bg-white p-5 shadow-lg rounded-lg">
-              <h2 className="text-xl font-semibold mb-3">User Details</h2>
-              <ul className="space-y-3">
-                <li className="flex justify-between">
-                  <span className="font-medium">Name:</span>
-                  <span>John Doe</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">Email:</span>
-                  <span>johndoe@example.com</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">Phone:</span>
-                  <span>+123 456 7890</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium">Member Since:</span>
-                  <span>Jan 1, 2020</span>
-                </li>
-              </ul>
-              <button className="mt-5 bg-blue-500 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600">
-                View Full Profile
-              </button>
-            </div>
+            <UserDetails/>
           </div>
         </div>
       </div>
