@@ -15,7 +15,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const CustomPieChart = ({balance , depositSum , p2pSum}:pieChartProps) => {
 // console.log(balance + " " + depositSum + " " + p2pSum)
 const data = [
-  { name: "Balance", value: balance },
+  { name: "Balance", value: balance/100 },
   { name: "Deposited Amount", value: depositSum },
   { name: "P2P Transfers", value: p2pSum },
   { name: "Pending Amount For approval", value: 100 },

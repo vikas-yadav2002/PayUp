@@ -47,7 +47,7 @@ const QuickAction = ({
     // Balance Table
     doc.autoTable({
       head: [["Locked Amount", "Available Amount"]],
-      body: [[balance.locked.toString(), balance.amount.toString()]],
+      body: [[balance.locked.toString(), (balance.amount/100).toString()]],
       startY: 10,
       theme: "grid",
       headStyles: { fillColor: [0, 0, 139], textColor: [255, 255, 255] }, // Dark blue background, white text
@@ -59,7 +59,7 @@ const QuickAction = ({
       body: P2pTransaction.map((tx) => [
         tx.id,
     
-        tx.to,
+        tx.id,
         tx.amount.toString(),
         tx.timestamp,
        
