@@ -43,11 +43,41 @@ async function getBalance() {
       locked: balance?.locked || 0
   }
 }
+const getP2PTransaction = async () => {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
+  if (!userId) {
+      return []; // Return empty array if user is not logged in
+  }
+
+  const transactions = await prisma.p2ptransactions.findMany({
+      where: {
+          fromUserId: Number(userId),
+      },
+  });
+
+  return transactions.map((t) => ({
+      id: t.id,
+      to: t.toUserId,
+      amount: (t.amount/100),
+      timestamp: t.Timestamp,
+  })); // need to learn the difference betweeen array.map((item)=>{ }) and array.map(item=>({}))
+};
 
 export default async function () {
   
   const balance = await getBalance();
     const transactions = await getOnRampTransactions();
+    const transaction = await getP2PTransaction();
+    let depositSum : number = 0 ;
+    let p2pSum : number = 0 ;
+    transactions.map((val)=>{
+          depositSum += val.amount
+    })
+    transaction.map((val)=>{
+      p2pSum += val.amount
+})
   return (
     <>
       <div className="flex flex-col w-full">
@@ -93,10 +123,10 @@ export default async function () {
             <Notifications/>
 
             {/* Quick Actions */}
-            <QuickAction/>
+            <QuickAction balance={balance} P2pTransaction={transaction} DepositeTransaction={transactions} />
 
             {/* User Engagement */}
-            <UserEngagement/>
+            <UserEngagement balance={balance.amount} depositSum={depositSum/100} p2pSum={p2pSum} / >
 
             {/* User Details */}
             <UserDetails/>

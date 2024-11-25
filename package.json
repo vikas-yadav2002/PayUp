@@ -1,5 +1,5 @@
 {
-  "name": "payup",
+  "name": "payease",
   "private": true,
   "scripts": {
     "build": "turbo build",

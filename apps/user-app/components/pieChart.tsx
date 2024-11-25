@@ -1,17 +1,25 @@
-"use client"
+"use client";
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Active Users", value: 400 },
-  { name: "Inactive Users", value: 300 },
-  { name: "Pending Users", value: 200 },
-  { name: "Banned Users", value: 100 },
-];
+interface pieChartProps{
+  balance : number ,
+  depositSum  : number ,
+   p2pSum : number
+}
+
+
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-const CustomPieChart = () => {
+const CustomPieChart = ({balance , depositSum , p2pSum}:pieChartProps) => {
+// console.log(balance + " " + depositSum + " " + p2pSum)
+const data = [
+  { name: "Balance", value: balance },
+  { name: "Deposited Amount", value: depositSum },
+  { name: "P2P Transfers", value: p2pSum },
+  { name: "Pending Amount For approval", value: 100 },
+];
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
