@@ -25,71 +25,40 @@ export const authOptions = {
             password: { label: "Password", type: "password", required: true }
           },
           // TODO: User credentials type from next-auth
-          async authorize(credentials : Record<"phone" | "password", string> | undefined) {
-
-            // Do zod validation, OTP validation here
-            if(!credentials){
-                throw new Error('no Credentials provided ')
+          async authorize(credentials: Record<"phone" | "password", string> | undefined) {
+            if (!credentials) {
+              throw new Error("No credentials provided");
             }
-
-
-            // check zod validation
+          
+            // Validate user input using Zod
             const result = credentialsSchema.safeParse(credentials);
             if (!result.success) {
-               throw new Error('Invalid Credentials')
+              throw new Error("Invalid credentials");
             }
-
-            // hash the password 
-            const hashedPassword = await bcrypt.hash(credentials.password, 10);
-
-            // check for existing user 
-            const existingUser = await db.user.findFirst({
-                where: {
-                    number: credentials.phone
-                }
+          
+            // Find existing user
+            const existingUser = await db.user.findUnique({
+              where: { number: credentials.phone },
             });
-
-               // match the pasword with the existing user 
-            if (existingUser) {
-
-                const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
-
-                if (passwordValidation) {
-                    return {
-                        id: existingUser.id.toString(),
-                        name: existingUser.name,
-                        email: existingUser.number
-                    }
-                }
-                return null;
+          
+            if (!existingUser) {
+              throw new Error("User not found. Please sign up first.");
             }
-
-            try {
-
-                //create the user 
-                const user = await db.user.create({
-                    data: {
-                        number: credentials.phone,
-                        password: hashedPassword
-                    }
-                });
-            
-
-                //return the user details
-                return {
-                    id: user.id.toString(),
-                    name: user.name,
-                    email: user.number
-                }
-
-                // error catching
-            } catch(e) {
-                console.error(e);
-                throw new Error('new user creation failed ')
+          
+            // Compare passwords
+            const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password);
+            if (!passwordMatch) {
+              throw new Error("Incorrect password");
             }
-
-            return null
-          },
+          
+            // Return authenticated user
+            return {
+              id: existingUser.id.toString(),
+              name: existingUser.name,
+              email: existingUser.number, // Use number as email since NextAuth requires an email field
+            };
+          }
+          ,
         })
     ],
     secret: process.env.JWT_SECRET || "secret",

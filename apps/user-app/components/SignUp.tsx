@@ -14,20 +14,23 @@ export default function SignUp() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+      
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email);
     formData.append('phone', phone);
     formData.append('password', password);
-
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+    
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       body: formData,
     });
 
     if (res.ok) {
-      router.push('/auth/signin');
+      router.push('/dashboard');
     } else {
       console.error('Sign-up failed');
     }
