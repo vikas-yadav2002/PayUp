@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import Link from "next/link";
 
 import { Metadata } from "next";
 import { useState } from "react";
+import { Loader } from "lucide-react";
 
 // export const metadata: Metadata = {
 //   title: "PayEase",
@@ -12,6 +13,7 @@ import { useState } from "react";
 
 const SigninPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -20,28 +22,37 @@ const SigninPage = () => {
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
-            <div className="w-full px-4 flex justify-center gap-8">
+            <div className="flex w-full justify-center gap-8 px-4">
               {/* Section for User */}
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px] text-center">
+              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 text-center shadow-three dark:bg-dark sm:p-[60px]">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                   Continue as User
                 </h2>
                 <p className="mt-4 text-gray-600 dark:text-gray-300">
-                  Sign in to access your user dashboard and explore our services:
+                  Sign in to access your user dashboard and explore our
+                  services:
                 </p>
-                <ul className="mt-4 text-left text-gray-600 dark:text-gray-300 list-disc list-inside">
+                <ul className="mt-4 list-inside list-disc text-left text-gray-600 dark:text-gray-300">
                   <li className="m-1">View and manage your account details</li>
                   <li className="m-1">Track your transaction history</li>
                   <li className="m-1">Access personalized recommendations</li>
                   <li className="m-1">Get support and assistance</li>
                 </ul>
                 <button
-                  className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  className={`mt-6 w-full rounded ${
+                    clicked
+                      ? "cursor-not-allowed rounded bg-gray-400 px-4 py-2 text-white"
+                      : "bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  }`}
+                  disabled={clicked} // Ensure button gets disabled
                   onClick={() => {
-                    window.location.href = "http://localhost:3002/signin";
-                  }} >
-                  Sign In as User
+                    setClicked(true);
+                    window.location.href = "http://localhost:3002/signin"; // Page reloads before state changes back
+                  }}
+                >
+                  {clicked ? "Loading....." : "Sign In as User"}
                 </button>
+
                 <p className="mt-6 text-gray-600 dark:text-gray-300">
                   Don't have an account?{" "}
                   <a
@@ -54,18 +65,21 @@ const SigninPage = () => {
               </div>
 
               {/* Section for Merchant */}
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px] text-center">
+              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 text-center shadow-three dark:bg-dark sm:p-[60px]">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                   Continue as Merchant
                 </h2>
                 <p className="mt-4 text-gray-600 dark:text-gray-300">
-                  Sign in to manage your merchant account and enjoy the following:
+                  Sign in to manage your merchant account and enjoy the
+                  following:
                 </p>
-                <ul className="mt-4 text-left text-gray-600 dark:text-gray-300 list-disc list-inside">
+                <ul className="mt-4 list-inside list-disc text-left text-gray-600 dark:text-gray-300">
                   <li className="m-1">Monitor and track transactions</li>
                   <li className="m-1">Access detailed business analytics</li>
                   <li className="m-1">Manage your merchant profile</li>
-                  <li className="m-1">Seamless payouts and wallet management</li>
+                  <li className="m-1">
+                    Seamless payouts and wallet management
+                  </li>
                 </ul>
                 <div>
                   <button
@@ -89,17 +103,17 @@ const SigninPage = () => {
                   </p>
 
                   {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                      <div className="bg-white rounded-lg p-6 w-80 shadow-lg">
-                        <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                      <div className="w-80 rounded-lg bg-white p-6 shadow-lg">
+                        <h2 className="mb-4 text-lg font-semibold text-gray-700">
                           Coming Soon!
                         </h2>
-                        <p className="text-gray-600 mb-6">
-                          The Merchant section is still under development. Stay tuned for
-                          updates!
+                        <p className="mb-6 text-gray-600">
+                          The Merchant section is still under development. Stay
+                          tuned for updates!
                         </p>
                         <button
-                          className="w-full bg-blue-600 text-white rounded py-2 hover:bg-blue-700"
+                          className="w-full rounded bg-blue-600 py-2 text-white hover:bg-blue-700"
                           onClick={closeModal}
                         >
                           Close
@@ -112,7 +126,6 @@ const SigninPage = () => {
             </div>
           </div>
         </div>
-
 
         <div className="absolute left-0 top-0 z-[-1]">
           <svg
@@ -172,7 +185,6 @@ const SigninPage = () => {
           </svg>
         </div>
       </section>
-
     </>
   );
 };
