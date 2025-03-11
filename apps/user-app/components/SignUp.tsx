@@ -1,43 +1,76 @@
 "use client";
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
-import { FaGoogle, FaGithub, FaUserPlus } from 'react-icons/fa';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
+import { FaGoogle, FaGithub, FaUserPlus } from "react-icons/fa";
 
 export default function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-      
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('password', password);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-    
-    const res = await fetch('/api/auth/signup', {
-      method: 'POST',
-      body: formData,
-    });
+    setLoading(true);
 
-    if (res.ok) {
-      router.push('/dashboard');
-    } else {
-      console.error('Sign-up failed');
+    e.preventDefault();
+
+    // Log out any existing session to avoid conflicts.
+    await signOut();
+
+    // Create form data with signup details.
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("password", password);
+
+    try {
+      // // Call the signup API endpoint.
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log("Signup Response:", res);
+
+      if (res.ok) {
+        // After successful signup, use NextAuth to sign in via credentials.
+        const loginResponse = await signIn("credentials", {
+          redirect: false,
+          phone, // Use phone number as the credential.
+          password, // Use the same password.
+          callbackUrl: "/dashboard", // Redirect after login.
+        });
+        console.log("Login Response:", loginResponse);
+
+        // // If login is successful, redirect to the dashboard.
+        if (loginResponse?.ok) {
+          router.push("/dashboard");
+        } else {
+          console.error("Login failed:", loginResponse);
+        }
+      } else {
+        console.error("Sign-up failed:", res);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-black to-[#0B1120]">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-20 backdrop-blur-md z-50">
+          <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      )}
+
       <div className="flex items-center justify-center w-[40vw]">
         <h1 className="text-6xl text-white font-bold">PayEase</h1>
       </div>
@@ -47,9 +80,14 @@ export default function SignUp() {
           <h2 className="text-3xl font-bold text-black flex items-center space-x-2">
             <FaUserPlus /> <span>Sign Up</span>
           </h2>
-          <p className="text-gray-600">Create your account to start using PayEase.</p>
+          <p className="text-gray-600">
+            Create your account to start using PayEase.
+          </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4 w-full p-8 next-form">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 w-full p-8 next-form"
+          >
             <input
               type="text"
               placeholder="Name"
@@ -97,7 +135,7 @@ export default function SignUp() {
           <div className="space-y-4 w-full">
             <div className="flex justify-center">
               <button
-                onClick={() => signIn('google')}
+                onClick={() => signIn("google")}
                 className="w-3/4 p-3 text-white bg-red-500 rounded-md flex items-center justify-center space-x-2 hover:bg-red-600 transition-all duration-300 shadow-lg transform hover:scale-105"
               >
                 <FaGoogle /> <span>Continue with Google</span>
@@ -105,7 +143,7 @@ export default function SignUp() {
             </div>
             <div className="flex justify-center">
               <button
-                onClick={() => signIn('github')}
+                onClick={() => signIn("github")}
                 className="w-3/4 p-3 text-white bg-gray-800 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-900 transition-all duration-300 shadow-lg transform hover:scale-105"
               >
                 <FaGithub /> <span>Continue with GitHub</span>
@@ -113,12 +151,11 @@ export default function SignUp() {
             </div>
           </div>
 
-          {/* Already have an account? */}
           <div className="text-center mt-6">
             <p className="text-gray-600">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <span
-                onClick={() => router.push('/signin')}
+                onClick={() => router.push("/signin")}
                 className="text-blue-500 cursor-pointer hover:underline"
               >
                 Sign In
