@@ -29,7 +29,7 @@ export default function SignUp() {
     formData.append("password", password);
 
     try {
-      // // Call the signup API endpoint.
+      // Call the signup API endpoint.
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         body: formData,
